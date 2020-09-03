@@ -1,4 +1,4 @@
-# CyberArk Auto Onboarding Lambda Helper scripts
+# Helper scripts - CyberArk Auto Onboarding Lambda
 
 ## Introduction
 
