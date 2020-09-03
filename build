@@ -1,9 +1,7 @@
 #!/bin/bash
 
-BINDIR=$(dirname $(readlink -f $0))
+BINDIR=$(dirname "$(readlink -f $0)")
 . $BINDIR/utils
-
-read_env "Cyberark Auto onboarding Lambda directory" "SRCDIR"
 
 log_info "Building source builder docker image."
 docker build -t aws_onboarding_lambda_builder $BINDIR/docker
@@ -14,7 +12,7 @@ docker run  --rm \
             --mount type=bind,source="$SRCDIR/src",target=/tmp/src \
             --mount type=bind,source="$SRCDIR/requirements.txt",target=/tmp/requirements.txt \
             --mount type=bind,source="$BINDIR/dist",target=/tmp/output \
-            -e ENVIRONMENT_LAMBDA_ZIP="aws_environment_setup_0.1.1.zip" \
-            -e ONBOARDING_LAMBDA_ZIP="aws_ec2_auto_onboarding_0.1.1.zip" \
+            -e ENVIRONMENT_LAMBDA_ZIP="aws_environment_setup.zip" \
+            -e ONBOARDING_LAMBDA_ZIP="aws_ec2_auto_onboarding.zip" \
             aws_onboarding_lambda_builder
 log_done "Finished packaging lambdas code"

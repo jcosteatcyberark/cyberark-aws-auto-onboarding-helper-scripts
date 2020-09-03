@@ -29,9 +29,7 @@ cd /tmp/cache/package
 zip -q -r9 /tmp/output/${ENVIRONMENT_LAMBDA_ZIP} .
 
 cd /tmp/src/aws_environment_setup
-zip -q -g /tmp/output/${ENVIRONMENT_LAMBDA_ZIP} AWSEnvironmentSetup.py
-
-log_done "${ENVIRONMENT_LAMBDA_ZIP} built!"
+zip -q -g /tmp/output/${ENVIRONMENT_LAMBDA_ZIP} aws_environment_setup.py
 
 # Create aws_ec2_auto_onboarding.zip package
 log_info "Building ${ONBOARDING_LAMBDA_ZIP}"
@@ -41,6 +39,12 @@ cd /tmp/cache/package
 zip -q -r9 /tmp/output/${ONBOARDING_LAMBDA_ZIP} .
 
 cd /tmp/src/aws_ec2_auto_onboarding
-zip -q -g /tmp/output/${ONBOARDING_LAMBDA_ZIP} aws_services.py AWSEc2AutoOnboarding.py instance_processing.py kp_processing.py pvwa_api_calls.py pvwa_integration.py puttygen
+zip -q -g /tmp/output/${ONBOARDING_LAMBDA_ZIP} aws_ec2_auto_onboarding.py
 
+# Add shared librairies to both
+cd /tmp/src/shared_libraries
+zip -q -g /tmp/output/${ENVIRONMENT_LAMBDA_ZIP} .
+zip -q -g /tmp/output/${ONBOARDING_LAMBDA_ZIP} .
+
+log_done "${ENVIRONMENT_LAMBDA_ZIP} built!"
 log_done "${ONBOARDING_LAMBDA_ZIP} built!"
